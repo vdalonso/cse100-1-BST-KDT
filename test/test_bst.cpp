@@ -63,6 +63,10 @@ TEST_CASE("Building BST with integers") {
     SECTION("adding elements in random order") {
         test_bst<int>(bst, vector<int>{10, 5, 15, 7, -2, 12}, 3);
         REQUIRE_FALSE(bst.insert(-2));
+	//added this myself
+        WARN("Calling BST::inorder(), ensure output is in ascending order");
+        bst.inorder();
+
     }
 }
 

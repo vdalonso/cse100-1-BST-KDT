@@ -38,8 +38,38 @@ public:
      *     the BSTNode that is the successor of this BSTNode,
      *     or 0 if there is none (this is the last node in the BST).
      */
-    // TODO
-    BSTNode<Data> *successor() {}
+    // TODO: DONE?
+    BSTNode<Data> *successor() { 
+	BSTNode<Data> *curr = this;
+	if (curr->parent == nullptr && curr->right == nullptr) {
+		return 0;
+	}
+	else if(curr->right != nullptr) {
+		if(curr->right->left == nullptr)
+			return curr->right;
+		else {
+			curr = curr->right;
+			while (curr->left != nullptr)
+				curr = curr->left;
+			return curr;
+		}
+	}
+	else {
+		if( curr == curr->parent->left)
+			return curr->parent;
+		else {
+			//curr = curr->parent;
+			while(curr != curr->parent->left){
+				if(curr->parent->parent == nullptr)
+					return 0;
+				else
+					curr = curr->parent;
+			}
+			return curr->parent;
+		}
+	}
+		
+}
 };
 
 /** 

@@ -49,6 +49,7 @@ int main(int argc, char *argv[]) {
     string line;
 
     // Read in the actor names from file
+    // check.
     while (getline(in, line)) {
         tree.insert(line);
     }
@@ -65,8 +66,9 @@ int main(int argc, char *argv[]) {
         getline(cin, name);
 
         // Look for provided name in the BST
+        // REMOVED && item != tree.end()
         BST<string>::iterator item = tree.find(name);
-        if (item != 0 && item != tree.end()) {
+        if (item != 0 && item != tree.end() ) {
             cout << name << " found!" << "\n";
         } else {
             cout << name << " NOT found" << "\n";
@@ -81,6 +83,8 @@ int main(int argc, char *argv[]) {
             break;
         }
     }
+	//function call to inorder()
+//	tree.inorder(); 
 
     // Close the file
     if (in.is_open()) {
