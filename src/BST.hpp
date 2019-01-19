@@ -2,8 +2,8 @@
 // BST.hpp
 // CSE 100 Project 1
 //
-// Last modified by Heitor Schueroff on 01/10/2019
-//
+// Last modified by Victor Alonso on 01/18/2019
+// A12981873
 
 #ifndef BST_HPP
 #define BST_HPP
@@ -26,6 +26,8 @@ protected:
 
     // Height of this BST.
     unsigned int iheight;
+	//Added this 
+    unsigned int currH;
 
 public:
     // Define iterator as an aliased typename for BSTIterator<Data>.
@@ -58,8 +60,9 @@ public:
      *     true if the item was inserted as a consequence of calling
      *     this function, false otherwise (e.g. item is a duplicate).
      */
-    // TODO: DONE
+    // TODO: DONE, except for implementation fo height
     virtual bool insert(const Data &item) {
+	int currH = 0;
 	//first check if BST/root is empty and inserts it as the root if so
 	if(empty()){
 		root = new BSTNode<Data>(item);
@@ -74,6 +77,7 @@ public:
 
 	else {
 		BSTNode<Data>* current = root;
+		currH = currH + 1;
 		while(current != nullptr){
 			if(item < current->data)
 			{
@@ -81,10 +85,15 @@ public:
 					current->left = new BSTNode<Data>(item);
 					current->left->parent = current;
 					isize = isize + 1;
+					currH = currH + 1;
+					if(currH > iheight)
+						iheight = currH;
 					return true;
 					}
-				else
+				else {
+					currH = currH + 1;
 					current = current->left; 
+				}
 			}
 			//case where item is larger than current->data
 			else if (current->data < item) {
@@ -92,10 +101,15 @@ public:
 					current->right = new BSTNode<Data>(item);
 					current->right->parent = current;
 					isize = isize + 1;
+					currH = currH + 1;
+					if(currH > iheight)
+						iheight = currH;
 					return true;
 				}
-				else
+				else {
+					currH = currH + 1;
 					current = current->right;
+				}
 			}
 			//case where item equals the data ie: a duplicate
 			else
@@ -159,13 +173,6 @@ public:
     // TODO
     // idea: change to count the nodes and  find logbase 2 of that.
     unsigned int height() const {
-	int currH;
-//	BSTNode<Data>* curr = root;
-//	while (curr->left != nullptr && curr->right != nullptr) {
-///		if(curr->left != nullptr) {
-//			curr = curr->
-		
-//		}
 	return iheight;
 	}
 	
