@@ -257,9 +257,12 @@ private:
     // TODO: DONE
     static void deleteAll(BSTNode<Data> *n) {
 	BSTNode<Data>* current = n;
+	if(n == nullptr)
+		return;
 	if(current->left == nullptr){
-		if(current->right == nullptr)
+		if(current->right == nullptr){
 			delete current;
+		}
 		else
 			deleteAll(current->right);
 	}	
