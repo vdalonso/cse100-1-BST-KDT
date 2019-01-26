@@ -77,11 +77,68 @@ int main(int argc, char *argv[]) {
     }
 
     // Resets the stream to beginning of file
+    // Initializes a new vector with Point type
+    // creates string that will help us store whats read from txt file
     in.seekg(0, ios_base::beg);
+    vector<Point> list;           
+    std::string line;
+    //std::string x , y , s  ;
+    int size = 0;
 
-    // 
-    // TODO your main2 implementation should go here
+     //inserting points to  vector,  a  little schetchy  IMO...
+    while  (getline(in, line) ) {
+	std::size_t s = line.find(" ");
+	string xstr = line.substr(0,s);
+	string ystr = line.substr(s);
+	double x = stod(xstr);
+	double y = stod(ystr);
+	Point* n = new Point(x,y);
+	list.push_back(*n);
+	size = size + 1;
+	}
+    
+    //valcout << "size of tree:  "   << list.size() <<  "\n";
     //
+    //create  a  KDT
+    //BST<Point> tree;
+    //int treesize  =  tree.build(list);
+	KDT tree;
+	int treesize = tree.build(list);
+	cout << "size of tree:  "  <<treesize   << "\n";
+
+	cout << "Height of tree: " << tree.height() << "\n";
+
+    string qpoint = "";
+    char response = 'y';
+
+    // Prompt user for an actor name
+    while (response == 'y') {
+        cout << "Enter coordinate (x y): " << "\n";
+        getline(cin, qpoint);
+
+	std::size_t s1 = qpoint.find(" ");
+	string xstr1 = qpoint.substr(0,s1);
+	string ystr1 = qpoint.substr(s1);
+	double x1 = stod(xstr1);
+	double y1 = stod(ystr1);
+	Point* n1 = new Point(x1,y1);
+
+        BST<Point>::iterator item = tree.findNearestNeighbor(*n1);
+	//printout of the point provided
+	//cout << "Point entered: " << n1->x << ", " << n1->y << "\n";
+	//printout of the nearest node in tree
+	cout << "Nearest point in the tree: "  << *item <<"\n";	
+
+        cout << "Search again? (y/n)" << "\n";
+        cin >> response;
+        cin.ignore();
+
+        if (response != 'n' && response != 'y') {
+            cout << "Invalid response, exiting..." << endl;
+            break;
+        }
+    }
+
 
     if (in.is_open()) {
         in.close();

@@ -84,7 +84,7 @@ int main(int argc, char *argv[]) {
         }
     }
 	//function call to inorder()
-//	tree.inorder(); 
+//	tree.inorder();
 
     // Close the file
     if (in.is_open()) {
