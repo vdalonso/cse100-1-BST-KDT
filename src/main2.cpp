@@ -104,7 +104,7 @@ int main(int argc, char *argv[]) {
     //int treesize  =  tree.build(list);
 	KDT tree;
 	int treesize = tree.build(list);
-	cout << "size of tree:  "  <<treesize   << "\n";
+	cout << "size of tree:  "  << treesize << "\n";
 
 	cout << "Height of tree: " << tree.height() << "\n";
 

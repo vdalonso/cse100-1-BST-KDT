@@ -208,7 +208,7 @@ public:
 		//cout <<"here exiting \n";	
 		double dis = curr->data.squareDistance(curr->data, p);
 		BSTNode<Point>** currp = &curr;
-		cout << "initial closest: " << curr->data.x << ", " << curr->data.y <<"\n";
+		//cout << "initial closest: " << curr->data.x << ", " << curr->data.y <<"\n";
 		double * disp = &dis;	
 		//function call
 		findNNHelper(root, p, disp, currp , 0);
@@ -403,11 +403,11 @@ private:
 	double sdx = sqrt( pow ((node->data.x) - (queryPoint.x) , 2) );
 	double sdy = sqrt( pow ((node->data.y) - (queryPoint.y) , 2) );	
 	//comparisons
-	if(sd1 < *smallestSquareDistance){
+	if(sd1 <= *smallestSquareDistance){
 		*closestPoint = node;
 		*smallestSquareDistance = sd1;
 		//cout<<"new closest: "<< *closestPoint->data.x << ", " << *closestPoint->data.y <<"\n";
-		cout<<"new closest: " << node->data.x << ", " << node->data.y <<"\n";
+		//cout<<"new closest: " << node->data.x << ", " << node->data.y <<"\n";
 		
 		//return;
 	}
