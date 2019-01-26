@@ -208,9 +208,10 @@ public:
 		//cout <<"here exiting \n";	
 		double dis = curr->data.squareDistance(curr->data, p);
 		BSTNode<Point>** currp = &curr;
+		cout << "initial closest: " << curr->data.x << ", " << curr->data.y <<"\n";
 		double * disp = &dis;	
 		//function call
-		findNNHelper(curr, p, disp, currp , d);
+		findNNHelper(root, p, disp, currp , 0);
 		return BST<Point>::iterator(*currp);
 	
 	}
@@ -336,11 +337,13 @@ private:
 				if(node->right != nullptr){
 					findNNHelper(node->right , queryPoint , smallestSquareDistance , closestPoint, dimension);
 					side = 1;
+					dimension = 0;
 					break;
 				}
 				else{	
 					findNNHelper(node->left, queryPoint, smallestSquareDistance, closestPoint, dimension);
 					side = 0;
+					dimension = 0;
 					break;
 					}
 			}
@@ -349,11 +352,13 @@ private:
 				if(node->left != nullptr){
 					findNNHelper(node->left , queryPoint , smallestSquareDistance , closestPoint, dimension);
 					side = 0;
+					dimension = 0;
 					break;
 				}
 				else{
 					findNNHelper(node->right, queryPoint, smallestSquareDistance, closestPoint, dimension);
 					side = 1;
+					dimension = 0;
 					break;
 				}
 			}
@@ -365,11 +370,13 @@ private:
 				if(node->right != nullptr){
 					findNNHelper(node->right, queryPoint, smallestSquareDistance, closestPoint, dimension);
 					side = 1;
+					dimension = 1;
 					break;
 				}
 				else{
 					findNNHelper(node->left, queryPoint, smallestSquareDistance, closestPoint, dimension);
 					side = 0;
+					dimension = 1;
 					break;
 				}
 					
@@ -379,11 +386,13 @@ private:
 				if(node->left != nullptr){
 					findNNHelper(node->left, queryPoint, smallestSquareDistance, closestPoint, dimension);
 					side = 0;
+					dimension = 1;
 					break;
 				}
 				else{
 					findNNHelper(node->right, queryPoint, smallestSquareDistance, closestPoint, dimension);
 					side = 1;
+					dimension = 1;
 					break;
 				}
 			}
@@ -395,13 +404,18 @@ private:
 	double sdy = sqrt( pow ((node->data.y) - (queryPoint.y) , 2) );	
 	//comparisons
 	if(sd1 < *smallestSquareDistance){
-		closestPoint = &node;
-		return;
+		*closestPoint = node;
+		*smallestSquareDistance = sd1;
+		//cout<<"new closest: "<< *closestPoint->data.x << ", " << *closestPoint->data.y <<"\n";
+		cout<<"new closest: " << node->data.x << ", " << node->data.y <<"\n";
+		
+		//return;
 	}
 	//check if you're at a leaf, if not then check square distance 
 	//of either x or y
-	else if (node->right != nullptr || node->left != nullptr){
+	if (node->right != nullptr || node->left != nullptr){
 		if (dimension == 1) {
+			dimension = 0;
 			if(sdy < *smallestSquareDistance ){
 				if(side = 0 && node->right != nullptr)
 					findNNHelper(node->right, queryPoint, smallestSquareDistance, closestPoint, dimension);
@@ -415,6 +429,7 @@ private:
 				return;
 		}
 		else{
+			dimension = 1;
 			if(sdx < *smallestSquareDistance){
 				if(side = 0 && node->right != nullptr)
 					findNNHelper(node->right, queryPoint, smallestSquareDistance, closestPoint, dimension);
@@ -424,10 +439,9 @@ private:
 					return;
 			}
 			else return;	
-	
+			
 		}
 	}
-	else
 		return;
 }
 };
